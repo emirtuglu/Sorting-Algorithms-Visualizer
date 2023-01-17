@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>Sorting Algorithms Visualizer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js"></script>
+    <script src="scripts/algorithms.js"></script>
+    <script src="scripts/sketch.js"></script>
+    <script src="scripts/eventListeners.js"></script>
+    <script src="scripts/helpers.js"></script>
+    <link rel="stylesheet" href="styles/style.css">
+  </head>
+  <body>
+    <h1>Sorting Algorithms Visualizer</h1>
+    <form id="firstButtonsContainer">
+        <div class="sortingOption">
+          <input type="radio" name="algorithm" id="bubbleSortButton" checked>
+          <label for="bubbleSortButton" unselectable>Bubble Sort</label>
+        </div>
+        <div class="sortingOption">
+          <input type="radio" name="algorithm" id="selectionSortButton">
+          <label for="selectionSortButton" unselectable>Selection Sort</label>
+        </div>
+        <div class="sortingOption">
+          <input type="radio" name="algorithm" id="insertionSortButton">
+          <label for="insertionSortButton" unselectable>Insertion Sort</label>
+        </div>
+        <div class="sortingOption">
+          <input type="radio" name="algorithm" id="mergeSortButton">
+          <label for="mergeSortButton" unselectable>Merge Sort</label>
+        </div>
+        <div class="sortingOption">
+          <input type="radio" name="algorithm" id="quickSortButton">
+          <label for="quickSortButton" unselectable>Quick Sort</label>
+        </div>
+        <input type="button" class="button" id="changeArrayButton" value="Change Array">
+        <input type="button" class="button" id="sortButton" value="Sort">
+    </form>
+
+    <div id="secondButtonsContainer">
+      <input type="range" id="arraySizeRange" min="4" max="100" value="48">
+      <input type="range" id="sortingSpeedRange" min="1" max="70" value="35">
+      <input type="button" class="button" id="pauseButton" value="Pause" disabled="true">
+      <p id="sizeText">Array Size</p>
+      <p id="speedText">Sorting Speed</p>
+    </div>
+
+    <div id="canvasContainer"></div>
+    <hr>
+    <p id="descriptionText" style="text-align: center; opacity: 0.6;">Sort the array by guessing the next swap in selected algorithm</p>
+  </body>
+</html>
