@@ -14,13 +14,11 @@ document.addEventListener("DOMContentLoaded", () => {
     changeArrayButton.addEventListener("click", () => {
         done = false;
         enableButtons();
+        pauseButton.disabled = true;
         generateArray(arraySize);
         loadSwaps();
-        clearSelectedRectangles();
-        currentPair = [-1, -1];
         started = false;
         descriptionText.style.visibility = "visible";
-        pauseButton.disabled = true;
         if (paused) {
             paused = false;
             pauseButton.value = "Pause";
@@ -28,29 +26,30 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     bubbleSortButton.addEventListener("click", () => {
-        loadSwaps();
+        prepareToSort();
     });
 
     selectionSortButton.addEventListener("click", () => {
-        loadSwaps();
+        prepareToSort();
     });
 
     insertionSortButton.addEventListener("click", () => {
-        loadSwaps();
+        prepareToSort();
     });
 
     mergeSortButton.addEventListener("click", () => {
-        loadSwaps();
+        prepareToSort();
     });
 
     quickSortButton.addEventListener("click", () => {
-        loadSwaps();
+        prepareToSort();
     });
 
     sortButton.addEventListener("click", () => {
         started = true;
         pauseButton.disabled = false;
         descriptionText.style.visibility = "hidden";
+        frameRate(Math.floor(sortingSpeedRange.value));
     });
 
     pauseButton.addEventListener("click", () => {
@@ -67,7 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
     arraySizeRange.addEventListener("input", () => {
         arraySize = Math.floor(arraySizeRange.value);
         generateArray(arraySize);
-        clearSelectedRectangles();
         loadSwaps();
         pauseButton.disabled = true;
         done = false;

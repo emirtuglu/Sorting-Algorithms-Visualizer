@@ -17,6 +17,7 @@ let selectedRectangles;
 let twoRectSelected;
 
 function setup() {
+    // Inıtial settings
     canvasContainer = document.getElementById("canvasContainer");
     arraySize = arraySizeRange.value;
     generateArray(arraySize);
@@ -45,11 +46,7 @@ function draw() {
         // Check if there is remaining elements in generator
         done = sortGenerator.next().done;   
         if (done) {   
-            enableButtons();
-            sortGenerator = undefined;
-            currentPair = [-1, -1];
-            started = false;
-            clearSelectedRectangles();
+            finishSort();
         }
     }
 
@@ -65,22 +62,32 @@ function draw() {
                     // User started to sort
                     disableButtons();
                     sortButton.disabled = false;
-                    if (mergeSortButton.checked) {  // merge sort is a special case
-                        if (selectedRectangles[1] < selectedRectangles[0]) { // less number must be in 0 index
+                    
+                    // If frame rate is less than 3, make it 3 to reduce lagging.
+                    if (Math.floor(sortingSpeedRange.value) < 3) {
+                        frameRate(3);
+                    }
+
+                    // Handle merge sort case since it has a different swapping mechanism
+                    if (mergeSortButton.checked) {
+
+                        // Ensure the least number is in index 0
+                        if (selectedRectangles[1] < selectedRectangles[0]) {
                             swap(selectedRectangles, 0, 1);
                         }
+                        // Swapping
                         for (var k = selectedRectangles[1] - 1; k >= selectedRectangles[0]; k--) {
                             swap(arr, k, k+1);
                         }
                     }
-                    else {
+                    else {  // Swap normally if not merge sort
                         swap(arr, selectedRectangles[0], selectedRectangles[1]);
                     }
                     nextSwapsIndex++;
                     clearSelectedRectangles();
                     if (nextSwapsIndex == nextSwaps.length) {
                         // User completed sorting
-                        done = true;
+                        finishSort();
                     }
                 }
                 else {
@@ -104,13 +111,16 @@ function draw() {
 }
 
 function mousePressed() {
+    // Determining which rectangle user chose
     for (let i = 0; i < arr.length; i++) {
         if (mouseX > xPos + i * widthOfBar * gapFactor && mouseX < xPos + (i + 1) * widthOfBar * gapFactor &&
             mouseY > yPos - arr[i] * heightFactorOfBar && mouseY < yPos) {
             if (selectedRectangles.length === 0) {
+                // First rectangle selected
                 selectedRectangles[0] = i;
             }
             else if (selectedRectangles.length === 1) {
+                // Second rectangle selected
                 selectedRectangles[1] = i;
                 twoRectSelected = true;
             }

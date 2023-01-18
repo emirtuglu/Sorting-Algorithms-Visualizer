@@ -29,3 +29,56 @@ function clearSelectedRectangles() {
     twoRectSelected = false;
     selectedRectangles = [];
 }
+
+function prepareToSort() {
+    loadSwaps();
+    if(done) {
+        generateArray(arraySize);
+        sortButton.disabled = false;
+        done = false;
+    }
+}
+
+function finishSort() {
+    done = true;
+    enableButtons();
+    sortGenerator = undefined;
+    sortButton.disabled = true;
+    pauseButton.disabled = true;
+    currentPair = [-1, -1];
+    started = false;
+    clearSelectedRectangles();
+}
+
+function loadSwaps() {
+    nextSwapsIndex = 0;
+    nextSwaps = [];
+    copyArr = [...arr];
+    copyArrSize = copyArr.length;
+    sortButton.disabled = false;
+    currentPair = [-1, -1];
+    clearSelectedRectangles();
+    if (bubbleSortButton.checked) {
+        bubbleSortSwaps();
+        sortGenerator = bubbleSort();
+    }
+    else if (selectionSortButton.checked) {
+        selectionSortSwaps();
+        sortGenerator = selectionSort();
+    }
+    else if (insertionSortButton.checked) {
+        insertionSortSwaps();
+        sortGenerator = insertionSort();
+    }
+    else if (mergeSortButton.checked) {
+        mergeSortSwaps();
+        sortGenerator = mergeSort();
+    }
+    else if(quickSortButton.checked) {
+        quickSortSwaps();
+        sortGenerator = quickSort();
+    }
+    if (nextSwaps.length === 0) { // if generated random array is already sorted
+        setup();
+    }
+}
