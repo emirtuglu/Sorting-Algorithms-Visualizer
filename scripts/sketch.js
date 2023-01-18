@@ -105,14 +105,15 @@ function draw() {
         else {
             fill(25, 25, 112);  // default color
         }
+        textSize(window.innerWidth / 120)
         if (arraySize < 55) { text(arr[i], xPos + i * widthOfBar * gapFactor, yPos + 10); }
         rect(xPos + i * widthOfBar * gapFactor, yPos, widthOfBar, -arr[i] * heightFactorOfBar);
     }
 }
 
-function mousePressed() {
-    // Determining which rectangle user chose
-    for (let i = 0; i < arr.length; i++) {
+function mouseClicked() {
+     // Determining which rectangle user chose
+     for (let i = 0; i < arr.length; i++) {
         if (mouseX > xPos + i * widthOfBar * gapFactor && mouseX < xPos + (i + 1) * widthOfBar * gapFactor &&
             mouseY > yPos - arr[i] * heightFactorOfBar && mouseY < yPos) {
             if (selectedRectangles.length === 0) {
@@ -126,5 +127,5 @@ function mousePressed() {
             }
             break;
         }
-    }
+     }
 }
